@@ -1,6 +1,6 @@
 {
   "name": "@holepunchto/pear-radio-backend",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Pear radio backend",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,11 @@
     "hyperswarm": "^4.7.13",
     "node-id3": "^0.2.5",
     "ready-resource": "^1.0.0",
-    "sodium-native": "^3.4.1",
-    "standard": "^17.1.0"
+    "sodium-native": "^3.4.1"
+  },
+  "devDependencies": {
+    "brittle": "^3.0.0",
+    "joyrider": "^1.0.0",
+    "standard": "^17.0.0"
   }
 }
