@@ -1,10 +1,10 @@
-import NodeID3 from 'node-id3'
-import fs from 'fs'
-import { basename } from 'path'
-import mp3Duration from '@rafapaezbas/mp3-duration'
-import { stat } from 'fs/promises'
+const NodeID3 = require('node-id3')
+const fs = require('fs')
+const { basename } = require('path')
+const mp3Duration = require('@rafapaezbas/mp3-duration')
+const { stat } = require('fs/promises')
 
-export class Mp3ReadStream {
+module.exports = class Mp3ReadStream {
   static async stream (path) {
     const { size } = await stat(path)
     const duration = await Mp3ReadStream.readMp3Duration(path)

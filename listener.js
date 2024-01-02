@@ -1,10 +1,12 @@
-import { createManifest } from './manifest.js'
+const ReadyResource = require('ready-resource')
+const { createManifest } = require('./manifest.js')
 
 const PEAR_RADIO_STREAM = 'pear_radio_stream'
 const PEAR_RADIO_METADATA = 'pear_radio_metadata'
 
-export class Listener {
+module.exports = class Listener extends ReadyResource {
   constructor (userPublicKey, swarm, store, opts = {}) {
+    super()
     this.userPublicKey = userPublicKey
     this.swarm = swarm
     this.store = store
@@ -12,7 +14,7 @@ export class Listener {
     this.metadata = null
   }
 
-  async ready () {
+  async _open () {
     await this.store.ready()
     this.core = this.store.get({ keyPair: { publicKey: this.userPublicKey }, manifest: createManifest(this.userPublicKey, PEAR_RADIO_STREAM) })
     this.metadata = this.store.get({ keyPair: { publicKey: this.userPublicKey }, manifest: createManifest(this.userPublicKey, PEAR_RADIO_METADATA), valueEncoding: 'json' })
@@ -21,6 +23,12 @@ export class Listener {
     this.swarm.join(this.core.discoveryKey)
     this.swarm.join(this.metadata.discoveryKey)
     this.swarm.flush()
+  }
+
+  async _close () {
+    await this.store.close()
+    await this.core.close()
+    await this.swarm.destroy()
   }
 
   async listen (fromBlock, metadataCallback) {

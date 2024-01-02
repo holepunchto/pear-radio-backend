@@ -1,4 +1,4 @@
-export function createManifest (publicKey, namespace) {
+function createManifest (publicKey, namespace) {
   return {
     signer: {
       signature: 'ed25519',
@@ -6,4 +6,8 @@ export function createManifest (publicKey, namespace) {
       namespace: Buffer.from(namespace.padEnd(32, '\0'))
     }
   }
+}
+
+module.exports = {
+  createManifest
 }
