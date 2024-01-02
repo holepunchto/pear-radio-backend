@@ -1,5 +1,5 @@
 const test = require('brittle')
-const User = require('../user')
+const User = require('../lib/user')
 const createTestnet = require('hyperdht/testnet.js')
 
 test('creates/destroys user', async (t) => {

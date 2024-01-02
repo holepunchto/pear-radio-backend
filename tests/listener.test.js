@@ -1,12 +1,12 @@
 const test = require('brittle')
-const User = require('../user')
-const Listener = require('../listener')
-const Streamer = require('../streamer')
+const User = require('../lib/user')
+const Listener = require('../lib/listener')
+const Streamer = require('../lib/streamer')
 const createTestnet = require('hyperdht/testnet.js')
 const Hyperswarm = require('hyperswarm')
 const Corestore = require('corestore')
 const RAM = require('random-access-memory')
-const Mp3ReadStream = require('../mp3-read-stream')
+const Mp3ReadStream = require('../lib/mp3-read-stream')
 const path = require('path')
 
 test('creates/destroys listener', async (t) => {
