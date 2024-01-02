@@ -1,10 +1,12 @@
-import c from 'compact-encoding'
-import DHT from 'hyperdht'
-import RPC from '@hyperswarm/rpc'
-import { userInfo, syncResponse } from './encoding.js'
+const c = require('compact-encoding')
+const DHT = require('hyperdht')
+const RPC = require('@hyperswarm/rpc')
+const { userInfo, syncResponse } = require('./encoding.js')
+const ReadyResource = require('ready-resource')
 
-export class User {
+module.exports = class User extends ReadyResource {
   constructor (player, opts = {}) {
+    super()
     this.info = { publicKey: null, name: null, description: null, tags: null }
     this.keyPair = opts.keyPair || DHT.keyPair()
     this.rpc = new RPC({ keyPair: this.keyPair, ...opts })
@@ -13,7 +15,7 @@ export class User {
     this.connections = new Map()
   }
 
-  async ready () {
+  async _open () {
     this.server.respond('user-info', (req) => {
       return c.encode(userInfo, this.info)
     })
@@ -25,6 +27,11 @@ export class User {
     await this.server.listen(this.keyPair)
   }
 
+  async _close () {
+    await this.rpc.destroy()
+    await this.server.close()
+  }
+
   async getUserInfo (key) {
     if (!this.connections.has(key)) this.connections.set(key, this.rpc.connect(key))
     const encodedUserInfo = await this.connections.get(key).request('user-info', Buffer.alloc(0)) // empty request body
@@ -34,7 +41,7 @@ export class User {
   async syncRequest (key) {
     if (!this.connections.has(key)) this.connections.set(key, this.rpc.connect(key))
     const encodedSyncResponse = await this.connections.get(key).request('sync-request', this.keyPair.publicKey)
-    return this.decodeSyncResponse(encodedSyncResponse)
+    return this._decodeSyncResponse(encodedSyncResponse)
   }
 
   encodeUserInfo () {
@@ -49,7 +56,7 @@ export class User {
     }
   }
 
-  decodeSyncResponse (data) {
+  _decodeSyncResponse (data) {
     try {
       return c.decode(syncResponse, data)
     } catch (err) {

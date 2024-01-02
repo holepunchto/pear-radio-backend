@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "Pear radio backend",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "brittle tests/*.js",
     "fix": "standard --fix"
   },
   "keywords": [],

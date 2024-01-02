@@ -26,10 +26,12 @@ export class Listener {
   async listen (fromBlock, metadataCallback) {
     const stream = this.core.createReadStream({ live: true, start: fromBlock })
     this.metadata.createReadStream({ live: true, start: this.metadata.length - 1 })
-    this.metadata.on('append', async () => {
-      const data = await this.metadata.get(this.metadata.length - 1)
-      metadataCallback(data)
-    })
+    if (metadataCallback) {
+      this.metadata.on('append', async () => {
+        const data = await this.metadata.get(this.metadata.length - 1)
+        metadataCallback(data)
+      })
+    }
     return stream
   }
 
