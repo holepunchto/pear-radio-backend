@@ -128,3 +128,27 @@ Returns value of the given key.
 #### configuration.set(key, value)
 
 Sets value for the given key, with format `compact-encoding.any`.
+
+### TagManager
+
+Hyperswarm based tags search for users connectivity.
+
+``` javascript
+const tagManager = new TagManager(user)
+await tagManager.ready()
+```
+
+The tagManager will announce itself in the `#all` topic, and store all connections in the `tagManager.tags`.
+
+#### tagManager.announce(tag)
+
+Announces tag manager in the given tag topic.
+
+#### tagManager.searchByTag(tag)
+
+``` javascript
+await tagManager.searchByTag(tag)
+tagManager.on('stream-found', (userInfo) => {
+  console.log(userInfo)
+})
+```
