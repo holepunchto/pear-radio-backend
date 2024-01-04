@@ -9,7 +9,7 @@ Backend connectivity for [Pear Radio.](https://github.com/holepunchto/pear-radio
 User communication interface.
 
 ``` javascript
-const user = new User(player, opts)
+const user = new User(syncResponseCallback, opts)
 await user.ready()
 ```
 
