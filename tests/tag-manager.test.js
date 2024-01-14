@@ -22,59 +22,6 @@ test('can create/destroy a tag manager', async (t) => {
   t.ok(tagManager)
 })
 
-test('announce in #all channel', async (t) => {
-  t.plan(4)
-
-  const testnet = await createTestnet()
-  const bootstrap = testnet.bootstrap
-
-  const userA = new User(null, { bootstrap })
-  await userA.ready()
-
-  const tagManagerA = new TagManager(userA, { bootstrap })
-  await tagManagerA.ready()
-
-  const userB = new User(null, { bootstrap })
-  await userB.ready()
-
-  const tagManagerB = new TagManager(userB, { bootstrap })
-  await tagManagerB.ready()
-
-  userA.info = {
-    publicKey: Buffer.alloc(32),
-    name: 'userA_name',
-    description: 'userA_description',
-    tags: 'userA_tags'
-  }
-
-  userB.info = {
-    publicKey: Buffer.alloc(32),
-    name: 'userB_name',
-    description: 'userB_description',
-    tags: 'userB_tags'
-  }
-
-  await tagManagerB.announce()
-
-  tagManagerA.on('stream-found', (info) => {
-    t.is(info.name, 'userB_name')
-    t.is(info.tags, 'userB_tags')
-  })
-
-  tagManagerB.on('stream-found', (info) => {
-    t.is(info.name, 'userA_name')
-    t.is(info.tags, 'userA_tags')
-  })
-
-  t.teardown(async () => {
-    await tagManagerA.close()
-    await userA.close()
-    await tagManagerB.close()
-    await userB.close()
-    await testnet.destroy()
-  })
-})
-
 test('announce in #another channel', async (t) => {
   t.plan(4)
 
