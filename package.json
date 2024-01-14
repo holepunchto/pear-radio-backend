@@ -21,6 +21,7 @@
     "hyperdht": "^6.5.2",
     "hyperswarm": "^4.7.13",
     "node-id3": "^0.2.5",
+    "protomux-rpc": "^1.5.1",
     "ready-resource": "^1.0.0",
     "sodium-native": "^3.4.1"
   },
