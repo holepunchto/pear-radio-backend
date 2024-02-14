@@ -32,5 +32,18 @@
     "joyrider": "^1.0.0",
     "random-access-memory": "^6.2.0",
     "standard": "^17.0.0"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/pear-radio-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holepunchto/pear-radio-backend/issues"
+  },
+  "homepage": "https://github.com/holepunchto/pear-radio-backend#readme"
 }
