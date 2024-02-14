@@ -1,5 +1,5 @@
 {
-  "name": "@holepunchto/pear-radio-backend",
+  "name": "pear-radio-backend",
   "version": "1.3.0",
   "description": "Pear radio backend",
   "scripts": {
